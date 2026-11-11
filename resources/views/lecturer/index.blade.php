@@ -12,6 +12,32 @@
 
     <a class="btn btn-primary mb-3" href="{{ route('lecturer.create') }}" role="button">Create</a>
 
+    <form action="">
+
+        <div class="row g-3 mb-3">
+            <div class="col-md-4">
+                <input type="text" class="form-control" id="keyword" name="keyword"
+                    placeholder="Search lecturer name ...." value="{{ request('keyword') }}">
+            </div>
+            <div class="col-md-4">
+                <select class="form-select" id="department_id" name="department_id">
+                    <option value="">All Departments</option>
+
+                    @foreach ($departments as $department)
+                        <option value="{{ $department->id }}"
+                            {{ request('department_id') == $department->id ? 'selected' : '' }}>
+                            {{ $department->name }}
+                        </option>
+                    @endforeach
+
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success">Search</button>
+            </div>
+        </div>
+
+    </form>
     <table class="table table-bordered border-dark table-hover">
         <thead>
             <tr>
@@ -23,7 +49,7 @@
         <tbody>
             @foreach ($lecturers as $lecturer)
                 <tr>
-                    <th scope="row">{{ $loop->iteration }}</th>
+                    <th scope="row">{{ $lecturers->firstItem() + $loop->index }}</th>
                     <td>{{ $lecturer->name }} -- {{ $lecturer->department->name }}</td>
                     <td>
                         <a class="btn btn-primary" href="{{ route('lecturer.edit', $lecturer) }}"
@@ -42,5 +68,7 @@
 
         </tbody>
     </table>
+
+    {{ $lecturers->links() }}
 
 </x-app>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\Lecturer;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,21 @@ class LecturerController extends Controller
      */
     public function index()
     {
-            return view('lecturer.index', [
+
+        $lecturers = Lecturer::latest();
+        $keyword = request('keyword');
+        if ($keyword) {
+            $lecturers->where('name', 'like', "%$keyword%");
+        }
+        $departmentId = request('department_id');
+        if ($departmentId) {
+            $lecturers->where('department_id', $departmentId);
+        }
+
+        return view('lecturer.index', [
             'title' => 'Lecturer',
-            'lecturers' => Lecturer::with('department')->latest()->get(),
+            'departments' => Department::latest()->get(),
+            'lecturers' => $lecturers->paginate(10)->withQueryString(),
         ]);
     }
 
@@ -23,7 +36,10 @@ class LecturerController extends Controller
      */
     public function create()
     {
-        //
+        return view('lecturer.create', [
+            'title' => 'Create Lecturer',
+            'departments' => Department::latest()->get(),
+        ]);
     }
 
     /**
