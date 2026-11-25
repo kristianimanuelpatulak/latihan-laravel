@@ -8,7 +8,7 @@
     <a class="btn btn-warning mb-3" href="{{ route('lecturer.index') }}" role="button">Back</a>
 
     <div class="card" style="width: 18rem;">
-        <img src="{{ $lecturer->avatar ? asset('storage/' . $lecturer->avatar) : asset('images/no-image.png') }}"
+        <img src="{{ $lecturer->avatar ? asset('storage/' . $lecturer->avatar) : asset('images/no_image.jpg') }}"
             class="card-img-top" alt="{{ $lecturer->name }}">
         <div class="card-body">
             <h5 class="card-title">{{ $lecturer->name }}</h5>

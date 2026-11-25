@@ -11,7 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // lecturer
         Schema::table('lecturers', function (Blueprint $table) {
+            $table->string('avatar')->nullable()->after('name');
             $table->softDeletes();
         });
     }
@@ -19,10 +21,12 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
+    // rollback
     public function down(): void
     {
         Schema::table('lecturers', function (Blueprint $table) {
             $table->dropSoftDeletes();
+            $table->dropColumn('avatar');
         });
     }
 };
